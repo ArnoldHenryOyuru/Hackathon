@@ -42,7 +42,7 @@ npm run dev
 
 Open <http://localhost:5173/>. Vite proxies `/api` to FastAPI at `http://127.0.0.1:8000`. Check a production build with `npm run build`.
 
-### Configuration
+### ####Configuration
 
 | Variable | Default | Purpose |
 | --- | --- | --- |
