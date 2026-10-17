@@ -5,3 +5,4 @@
 .cancelTimer { display:block; height:3px; background:var(--emergency); transform-origin:left center; animation:cancelDrain 10s linear forwards; }
 @keyframes cancelDrain { from { transform:scaleX(1); } to { transform:scaleX(0); } }
 @media (prefers-reduced-motion: reduce) { .sosButton { transition:none; } }
+.sosBusy { font-size:clamp(1.6rem,6vw,2.6rem); letter-spacing:.04em; }
