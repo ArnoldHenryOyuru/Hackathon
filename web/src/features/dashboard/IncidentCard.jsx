@@ -1,0 +1,3 @@
+import PriorityBadge from "./PriorityBadge";
+import StatusControl from "./StatusControl";
+export default function IncidentCard({ alert, onStatus }) { return <article className="incidentRow fadeIn"><div className="rowTime mono">{new Date(alert.created_at).toLocaleTimeString([], {hour:"2-digit",minute:"2-digit"})}</div><div><PriorityBadge value={alert.priority}/></div><div className="incidentMain"><strong>{alert.location||"Location unavailable"}</strong><span className="category">{alert.category}</span><p>{alert.ai_summary}</p><small>Recommended: {alert.recommended_action}</small></div><StatusControl value={alert.status} onChange={(status)=>onStatus(alert.id,status)}/></article>; }

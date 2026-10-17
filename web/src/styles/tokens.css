@@ -1,0 +1,5 @@
+:root {
+  --paper: #f3f0e8; --surface: #fbfaf6; --ink: #1b1b18; --ink-soft: #5e5c54;
+  --rule: #d9d4c7; --emergency: #c42b1c; --high: #d9731a; --medium: #c9a227; --low: #5c7a5a;
+  --font-ui: "Archivo", Arial, sans-serif; --font-data: "IBM Plex Mono", monospace;
+}

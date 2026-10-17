@@ -1,0 +1,1 @@
+export default function StatStrip({ stats }) { const items=[["INCIDENTS",stats.total_incidents],["SOS ALERTS",stats.total_sos],["HIGH PRIORITY",stats.high_priority],["OPEN",stats.open],["RESOLVED",stats.resolved]]; return <div className="statStrip">{items.map(([label,value])=><div key={label}><span>{label}</span><strong>{value}</strong></div>)}</div>; }

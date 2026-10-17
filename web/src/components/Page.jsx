@@ -1,0 +1,2 @@
+import { Link } from "react-router-dom";
+export default function Page({ children, eyebrow, title, actions }) { return <><header className="siteHeader"><Link className="brand" to="/">CAMPUSGUARD</Link><nav className="nav"><Link to="/dashboard">Dispatch</Link><Link to="/insights">Insights</Link></nav></header><main className="page"><div className="eyebrow">{eyebrow}</div>{title && <h1>{title}</h1>}{actions}{children}</main></>; }
