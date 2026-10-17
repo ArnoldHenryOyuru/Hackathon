@@ -48,6 +48,38 @@ def init_db() -> None:
                 stats_json TEXT NOT NULL,
                 narrative TEXT NOT NULL
             );
+            CREATE TABLE IF NOT EXISTS responders (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                role TEXT NOT NULL,
+                phone TEXT NOT NULL,
+                email TEXT,
+                notes TEXT
+            );
+            CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL UNIQUE,
+                password_hash TEXT NOT NULL,
+                role TEXT NOT NULL CHECK(role IN ('student', 'admin', 'responder'))
+            );
+            CREATE TABLE IF NOT EXISTS sessions (
+                token TEXT PRIMARY KEY,
+                user_id INTEGER NOT NULL REFERENCES users(id),
+                expires_at TEXT NOT NULL
+            );
             """
         )
-
+        columns = {row["name"] for row in db.execute("PRAGMA table_info(alerts)")}
+        if "triage_pending" not in columns:
+            db.execute("ALTER TABLE alerts ADD COLUMN triage_pending INTEGER NOT NULL DEFAULT 0")
+        from .auth import hash_password
+        demo_users = (
+            ("student", hash_password("student123"), "student"),
+            ("admin", hash_password("admin123"), "admin"),
+            ("responder", hash_password("responder123"), "responder"),
+        )
+        for username, password_hash, role in demo_users:
+            db.execute(
+                "INSERT OR IGNORE INTO users (username, password_hash, role) VALUES (?, ?, ?)",
+                (username, password_hash, role),
+            )

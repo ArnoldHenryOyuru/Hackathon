@@ -1,17 +1,18 @@
 import json
 from datetime import datetime, timezone
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 
 from ..db import connection
 from ..services.narrative import generate_narrative
 from ..services.stats import build_stats
+from ..auth import staff_required
 
 router = APIRouter(prefix="/api/insights", tags=["insights"])
 
 
 @router.post("/generate")
-def generate_insights() -> dict[str, object]:
+def generate_insights(_: dict[str, str] = Depends(staff_required)) -> dict[str, object]:
     stats = build_stats()
     narrative = generate_narrative(stats)
     generated_at = datetime.now(timezone.utc).isoformat()
@@ -24,10 +25,9 @@ def generate_insights() -> dict[str, object]:
 
 
 @router.get("/latest")
-def latest_insights() -> dict[str, object] | None:
+def latest_insights(_: dict[str, str] = Depends(staff_required)) -> dict[str, object] | None:
     with connection() as db:
         row = db.execute("SELECT * FROM insights ORDER BY id DESC LIMIT 1").fetchone()
     if row is None:
         return None
     return {"id": row["id"], "generated_at": row["generated_at"], "stats": json.loads(row["stats_json"]), "narrative": row["narrative"]}
-

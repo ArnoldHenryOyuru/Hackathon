@@ -1,0 +1,6 @@
+/venv/
+/web/
+/static/
+/__pycache__/
+*.db
+*.db-journal

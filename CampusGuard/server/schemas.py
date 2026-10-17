@@ -16,6 +16,14 @@ class ReportRequest(BaseModel):
     anonymous: bool = False
 
 
+class ResponderRequest(BaseModel):
+    name: str = Field(min_length=1, max_length=120)
+    role: Literal["Police", "Guardian", "Campus security", "Medical responder", "Other"]
+    phone: str = Field(min_length=3, max_length=40)
+    email: str | None = Field(default=None, max_length=160)
+    notes: str | None = Field(default=None, max_length=500)
+
+
 class StatusRequest(BaseModel):
     status: Literal["New", "Investigating", "Resolved"]
 
@@ -49,4 +57,3 @@ class Insight(BaseModel):
     generated_at: str
     stats: dict[str, Any]
     narrative: str
-
